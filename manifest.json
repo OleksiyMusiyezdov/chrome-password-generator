@@ -1,0 +1,10 @@
+{
+  "name": "Password Generator",
+  "description": "Chrome Password Generator Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icons/write-simple-7.png"
+  }
+}
