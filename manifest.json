@@ -6,5 +6,12 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": "icons/write-simple-7.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["credentials.json"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+
 }

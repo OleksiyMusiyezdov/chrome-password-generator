@@ -1,9 +1,11 @@
-const credentials = {
-    API_KEY: "",
-    API_URL: "https://api.api-ninjas.com/v1/passwordgenerator"
-};
+let credentials = {};
 
-const { API_KEY: apiKey, API_URL: apiUrl } = credentials;
+async function loadCredentials() {
+    const response = await fetch(chrome.runtime.getURL("credentials.json"));
+    credentials = await response.json();
+    // console.log("Loaded credentials:", credentials);
+    return credentials;
+}
 
 // DOM element references
 const lengthElement = document.getElementById("length");
@@ -21,10 +23,11 @@ const updateLength = () => {
 
 // Fetch password
 const fetchPassword = async (length) => {
-    const url = `${apiUrl}?length=${length}`;
     try {
+        const url = `${credentials.API_URL}?length=${length}`;
+
         const response = await fetch(url, {
-            headers: { "X-API-KEY": apiKey }
+            headers: { "X-API-KEY": credentials.API_KEY }
         });
 
         if (!response.ok) {
@@ -64,3 +67,12 @@ const handleGenerateClick = async () => {
 // Event listeners
 lengthElement?.addEventListener("change", updateLength);
 generateElement?.addEventListener("click", handleGenerateClick);
+
+// Initialize
+const init = async () => {
+    await loadCredentials();
+    lengthElement?.addEventListener("change", updateLength);
+    generateElement?.addEventListener("click", handleGenerateClick);
+};
+
+init();
